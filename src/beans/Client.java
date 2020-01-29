@@ -56,6 +56,10 @@ public class Client {
 		
 	}
 	
+	public Client(String login){
+		this.login = login;
+	}
+	
 	public Client(String last_name, String first_name, String job_title, String login, String password) {
 		super();
 		this.last_name = last_name;

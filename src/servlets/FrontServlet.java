@@ -17,7 +17,7 @@ import dao.AdminDAO;
 import dao.ClientDAO;
  
 
-@WebServlet(urlPatterns= {"","/clients/*"})
+@WebServlet(urlPatterns= {"/clients/*"})
 public class FrontServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ClientDAO clientDAO;
@@ -32,7 +32,7 @@ public class FrontServlet extends HttpServlet {
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	String requested =request.getRequestURI();
+    	/*String requested =request.getRequestURI();
 		String username= request.getParameter("username");
 		String password = request.getParameter("password");
 		
@@ -50,7 +50,7 @@ public class FrontServlet extends HttpServlet {
 			getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 		}else {
 			
-		}
+		}*/
     }
  
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -58,11 +58,12 @@ public class FrontServlet extends HttpServlet {
     		String action =request.getRequestURI();
     		//System.out.println(action);
     		try {
-    		
-	    		if(action.endsWith("/")) {
-	    			getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);;
+    			if(action.endsWith("/clients/insert")) {
+    				request.setCharacterEncoding("utf-8");
+	        		insertClient(request, response);
+	    			response.getWriter().println("Je suis bien entré dans la fonction insert");
 	    		}
-	    		else if(action.endsWith("/clients/list")) {
+    			else if(action.endsWith("/clients/list")) {
 	    			listClient(request, response);
 	    		}
 	    		else if(action.endsWith("/clients/new")) {
@@ -76,12 +77,11 @@ public class FrontServlet extends HttpServlet {
 	    			 showEditForm(request, response);
 	    		}
 	    		else if(action.endsWith("/clients/update")) {
-	   			 updateClient(request, response);
+	   			 //updateClient(request, response);
+	    			response.getWriter().println("Je susi bien entré dans la fonction insert");
+	    			response.getWriter().println("Je susi bien entré dans la fonction insert");
 	    		}
-	    		else if(action.endsWith("/clients/insert")) {
-	        		insertClient(request, response);
-	        		System.out.println("OK je suis ici ");
-	    		}
+	    		
     		}catch(SQLException sqlex) {
                 throw new ServletException(sqlex);
     		}
@@ -106,7 +106,6 @@ public class FrontServlet extends HttpServlet {
         request.setAttribute("client", existingClient);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/AjoutClient.jsp");
         dispatcher.forward(request, response);
- 
     }
  
     private void insertClient(HttpServletRequest request, HttpServletResponse response)
@@ -117,11 +116,14 @@ public class FrontServlet extends HttpServlet {
         String login = request.getParameter("login");
         String job_title = request.getParameter("job_title");
  
-        Client newClient = new Client(nom,prenom,job_title,login,password);
+        Client newClient = new Client();
+        newClient.setLast_name(nom);
+        newClient.setFirst_name(prenom);
+        newClient.setJob_title(job_title);
+        newClient.setLogin(login);
+        newClient.setPassword(password);
         clientDAO.insertClient(newClient);
-        
-        response.sendRedirect("clients/list");
-        
+        response.sendRedirect("list");
     }
  
     private void updateClient(HttpServletRequest request, HttpServletResponse response)
@@ -141,9 +143,9 @@ public class FrontServlet extends HttpServlet {
             throws SQLException, IOException {
         String login = request.getParameter("login");
  
-        Client client = new Client();
+        Client client = new Client(login);
         clientDAO.deleteClient(client);
-        response.sendRedirect("/list");
+        response.sendRedirect("list");
  
     }
     

@@ -41,7 +41,7 @@ public class ClientDAO {
     }
      
     public boolean insertClient(Client client) throws SQLException {
-        String sql = "INSERT INTO client (nom, prenom, job_title,login,password) VALUES (?, ?, ? , ? , ?)";
+        String sql = "INSERT INTO client (nom, prenom, job_title,login,password) VALUES (?,?,?,?,?)";
         connect();
          
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
@@ -139,7 +139,7 @@ public class ClientDAO {
          
         resultSet.close();
         statement.close();
-        
+        disconnect();
         return Client;
     }
 }

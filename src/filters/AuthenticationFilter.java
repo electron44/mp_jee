@@ -43,7 +43,7 @@ public class AuthenticationFilter implements Filter
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-		if (session.getAttribute("clients") == null)
+		if (session.getAttribute("admin") == null)
 		{
 			resp.sendRedirect(req.getContextPath() + "/");
 		}

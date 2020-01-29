@@ -5,6 +5,9 @@
 <html>
 <head>
     <title>Client crud</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <center>
@@ -15,7 +18,7 @@
         </h2>
     </center>
     <div align="center">
-        <table border="1" cellpadding="5">
+        <table class="table table-bordered" cellpadding="5">
             <caption><h2>List des Clients</h2></caption>
             <tr>
                 <th>Login</th>
@@ -31,9 +34,9 @@
                     <td><c:out value="${Client.last_name}" /></td>
                     <td><c:out value="${Client.job_title}" /></td>
                     <td>
-                        <a href="edit?login=<c:out value='${Client.login}' />">Edit</a>
+                        <a class="btn btn-success" href="edit?login=<c:out value='${Client.login}' />">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="delete?login=<c:out value='${Client.login}' />">Delete</a>                     
+                        <a class="btn btn-danger" href="delete?login=<c:out value='${Client.login}' />">Delete</a>                     
                     </td>
                 </tr>
             </c:forEach>

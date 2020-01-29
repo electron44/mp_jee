@@ -4,6 +4,9 @@
 <html>
 <head>
     <title>clients Store Application</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <center>
@@ -68,7 +71,7 @@
             <tr>
                 <th>Password : </th>
                 <td>
-                    <input type="text" name="password" size="45"
+                    <input type="password" name="password" size="45"
                             value="<c:out value='${client.password}' />"
                     />
                 </td>
