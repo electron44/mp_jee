@@ -4,21 +4,19 @@
 
 <html>
 <head>
-    <title>Clients Store Application</title>
+    <title>Client crud</title>
 </head>
 <body>
     <center>
-        <h1>Customers Management</h1>
+        <h1>Clientéle gestion</h1>
         <h2>
-            <a href="clients/new">Ajouter un nouveau client</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="clients/list">Lister les clients</a>
+            <a href="new">Ajouter un nouveau client</a>
              
         </h2>
     </center>
     <div align="center">
         <table border="1" cellpadding="5">
-            <caption><h2>List of Clients</h2></caption>
+            <caption><h2>List des Clients</h2></caption>
             <tr>
                 <th>Login</th>
                 <th>Nom</th>
