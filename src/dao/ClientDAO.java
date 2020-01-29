@@ -106,12 +106,12 @@ public class ClientDAO {
         connect();
          
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-        statement.setString(1, client.getFirst_name());
-        statement.setString(2, client.getLast_name());
-        statement.setString(3, client.getPassword());
-        statement.setString(4, client.getLogin());
-        statement.setString(5, client.getJob_title());
-         
+        statement.setString(1, client.getJob_title());
+        statement.setString(2, client.getFirst_name());
+        statement.setString(3, client.getLast_name());
+        statement.setString(4, client.getPassword());
+        statement.setString(5, client.getLogin());
+       
         boolean rowUpdated = statement.executeUpdate() > 0;
         statement.close();
         disconnect();

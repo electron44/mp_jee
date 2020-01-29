@@ -4,9 +4,10 @@
 <html>
 <head>
     <title>clients Store Application</title>
+     <meta charset=""> 
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <center>
@@ -17,7 +18,7 @@
     </center>
     <div align="center">
         <c:if test="${client != null}">
-            <form action="update" method="post">
+            <form action="update" method="POST">
         </c:if>
         <c:if test="${client == null}">
             <form action="insert" method="POST">
@@ -40,8 +41,7 @@
                 <th>Nom : </th>
                 <td>
                     <input type="text" name="nom" size="45"
-                            value="<c:out value='${client.last_name}' />"
-                        />
+                            value="<c:out value='${client.last_name}' />"/>
                 </td>
             </tr>
             <tr>
@@ -72,7 +72,7 @@
                 <th>Password : </th>
                 <td>
                     <input type="password" name="password" size="45"
-                            value="<c:out value='${client.password}' />"
+                            value=""
                     />
                 </td>
             </tr>

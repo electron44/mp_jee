@@ -32,25 +32,25 @@ public class FrontServlet extends HttpServlet {
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	/*String requested =request.getRequestURI();
-		String username= request.getParameter("username");
-		String password = request.getParameter("password");
-		
-		Administrateur admin = new Administrateur();
-		admin.setUsername(username);
-		admin.setPassword(password);
-		AdminDAO admin_dao = new AdminDAO();
-		boolean exist = false;
-		if(admin.getUsername()!=null)
-			exist =  admin_dao.connectAdmin(admin);
-		
-		if(exist) {
-			HttpSession session=request.getSession();
-			session.setAttribute("admin", admin);
-			getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-		}else {
-			
-		}*/
+		String action =request.getRequestURI();
+
+    	if(action.endsWith("/clients/insert")) {
+			request.setCharacterEncoding("UTF-8");
+    		try {
+				insertClient(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(action.endsWith("/clients/update")) {
+			request.setCharacterEncoding("UTF-8");
+			    try {
+					updateClient(request, response);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
     }
  
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -58,15 +58,13 @@ public class FrontServlet extends HttpServlet {
     		String action =request.getRequestURI();
     		//System.out.println(action);
     		try {
-    			if(action.endsWith("/clients/insert")) {
-    				request.setCharacterEncoding("utf-8");
-	        		insertClient(request, response);
-	    			response.getWriter().println("Je suis bien entré dans la fonction insert");
-	    		}
-    			else if(action.endsWith("/clients/list")) {
+    			
+    			if(action.endsWith("/clients/list")) {
+	    			request.setCharacterEncoding("UTF-8");
 	    			listClient(request, response);
 	    		}
 	    		else if(action.endsWith("/clients/new")) {
+	    			request.setCharacterEncoding("UTF-8");
 	    			  RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/AjoutClient.jsp");
 	    		      dispatcher.forward(request, response);
 	    		}
@@ -74,16 +72,13 @@ public class FrontServlet extends HttpServlet {
 	                deleteClient(request, response);
 	    		}
 	    		else if(action.endsWith("/clients/edit")) {
+	    			request.setCharacterEncoding("UTF-8");
 	    			 showEditForm(request, response);
 	    		}
-	    		else if(action.endsWith("/clients/update")) {
-	   			 //updateClient(request, response);
-	    			response.getWriter().println("Je susi bien entré dans la fonction insert");
-	    			response.getWriter().println("Je susi bien entré dans la fonction insert");
-	    		}
+	    		
 	    		
     		}catch(SQLException sqlex) {
-                throw new ServletException(sqlex);
+                System.out.println("Probléme au nibeau du SQL");
     		}
     		
     		
@@ -134,9 +129,9 @@ public class FrontServlet extends HttpServlet {
         String job_title = request.getParameter("job_title");
         String password = request.getParameter("password");
  
-        Client client = new Client(nom, prenom, login,job_title,password);
+        Client client = new Client(nom, prenom,job_title,login,password);
         clientDAO.updateClient(client);
-        getServletContext().getRequestDispatcher("/WEB-INF/Listings.jsp").forward(request, response);
+        response.sendRedirect("list");
     }
  
     private void deleteClient(HttpServletRequest request, HttpServletResponse response)

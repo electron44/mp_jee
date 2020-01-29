@@ -35,7 +35,6 @@
                 <label for="username">Username</label>
                 <input type="text" id="username" class="form-control" placeholder="username" name="username" required autofocus>
               </div>
-
               <div class="form-label-group">
              	 <label for="inputPassword">Password</label>
                 <input type="password" id="password" class="form-control" placeholder="Password" name="password" required>
