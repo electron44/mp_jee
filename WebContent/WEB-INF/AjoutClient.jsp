@@ -14,10 +14,10 @@
     </center>
     <div align="center">
         <c:if test="${client != null}">
-            <form action="client/update" method="post">
+            <form action="update" method="post">
         </c:if>
         <c:if test="${client == null}">
-            <form action="client/insert" method="post">
+            <form action="insert" method="POST">
         </c:if>
         <table border="1" cellpadding="5">
             <caption>

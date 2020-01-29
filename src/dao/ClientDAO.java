@@ -40,16 +40,16 @@ public class ClientDAO {
         }
     }
      
-    public boolean insertClient(Client Client) throws SQLException {
-        String sql = "INSERT INTO Client (nom, prenom, job_title,login,password) VALUES (?, ?, ? , ? , ?)";
+    public boolean insertClient(Client client) throws SQLException {
+        String sql = "INSERT INTO client (nom, prenom, job_title,login,password) VALUES (?, ?, ? , ? , ?)";
         connect();
          
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-        statement.setString(1, Client.getLast_name());
-        statement.setString(2, Client.getFirst_name());
-        statement.setString(3, Client.getJob_title());
-        statement.setString(4, Client.getLogin());
-        statement.setString(5, Client.getPassword());
+        statement.setString(1, client.getLast_name());
+        statement.setString(2, client.getFirst_name());
+        statement.setString(3, client.getJob_title());
+        statement.setString(4, client.getLogin());
+        statement.setString(5, client.getPassword());
          
         boolean rowInserted = statement.executeUpdate() > 0;
         statement.close();
@@ -100,17 +100,17 @@ public class ClientDAO {
         return rowDeleted;     
     }
      
-    public boolean updateClient(Client Client) throws SQLException {
-        String sql = "UPDATE Client SET job_title = ?, prenom = ?, nom = ? , password = ?";
+    public boolean updateClient(Client client) throws SQLException {
+        String sql = "UPDATE client SET job_title = ?, prenom = ?, nom = ? , password = ?";
         sql += " WHERE login = ?";
         connect();
          
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-        statement.setString(1, Client.getFirst_name());
-        statement.setString(2, Client.getLast_name());
-        statement.setString(3, Client.getPassword());
-        statement.setString(4, Client.getLogin());
-        statement.setString(5, Client.getJob_title());
+        statement.setString(1, client.getFirst_name());
+        statement.setString(2, client.getLast_name());
+        statement.setString(3, client.getPassword());
+        statement.setString(4, client.getLogin());
+        statement.setString(5, client.getJob_title());
          
         boolean rowUpdated = statement.executeUpdate() > 0;
         statement.close();
@@ -120,7 +120,7 @@ public class ClientDAO {
      
     public Client getClient(String login) throws SQLException {
         Client Client = null;
-        String sql = "SELECT * FROM Client WHERE login = ?";
+        String sql = "SELECT * FROM client WHERE login = ?";
          
         connect();
          
@@ -139,7 +139,7 @@ public class ClientDAO {
          
         resultSet.close();
         statement.close();
-         
+        
         return Client;
     }
 }

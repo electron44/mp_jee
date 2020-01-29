@@ -31,9 +31,9 @@
                     <td><c:out value="${Client.last_name}" /></td>
                     <td><c:out value="${Client.job_title}" /></td>
                     <td>
-                        <a href="clients/edit?login=<c:out value='${Client.login}' />">Edit</a>
+                        <a href="edit?login=<c:out value='${Client.login}' />">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="clients/delete?login=<c:out value='${Client.login}' />">Delete</a>                     
+                        <a href="delete?login=<c:out value='${Client.login}' />">Delete</a>                     
                     </td>
                 </tr>
             </c:forEach>

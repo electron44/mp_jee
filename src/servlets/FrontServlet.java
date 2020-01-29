@@ -26,7 +26,6 @@ public class FrontServlet extends HttpServlet {
         String jdbcURL = "jdbc:mysql://localhost:3306/test";
         String jdbcUsername = "root";
         String jdbcPassword = "";
- 
         clientDAO = new ClientDAO(jdbcURL, jdbcUsername, jdbcPassword);
  
     }
@@ -59,21 +58,30 @@ public class FrontServlet extends HttpServlet {
     		String action =request.getRequestURI();
     		//System.out.println(action);
     		try {
-    		if(action.endsWith("/")) {
-    			getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);;
-    		}else if(action.endsWith("/clients/list")) {
-    			listClient(request, response);
-    		}else if(action.endsWith("/clients/new")) {
-    			  RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/AjoutClient.jsp");
-    		      dispatcher.forward(request, response);
-    		}else if(action.endsWith("/clients/delete")) {
-    			
-    		}else if(action.endsWith("/clients/update")) {
-    			
-    		}else if(action.endsWith("/clients/insert")) {
-        		insertClient(request, response);
-        		
-    		}
+    		
+	    		if(action.endsWith("/")) {
+	    			getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);;
+	    		}
+	    		else if(action.endsWith("/clients/list")) {
+	    			listClient(request, response);
+	    		}
+	    		else if(action.endsWith("/clients/new")) {
+	    			  RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/AjoutClient.jsp");
+	    		      dispatcher.forward(request, response);
+	    		}
+	    		else if(action.endsWith("/clients/delete")) {
+	                deleteClient(request, response);
+	    		}
+	    		else if(action.endsWith("/clients/edit")) {
+	    			 showEditForm(request, response);
+	    		}
+	    		else if(action.endsWith("/clients/update")) {
+	   			 updateClient(request, response);
+	    		}
+	    		else if(action.endsWith("/clients/insert")) {
+	        		insertClient(request, response);
+	        		System.out.println("OK je suis ici ");
+	    		}
     		}catch(SQLException sqlex) {
                 throw new ServletException(sqlex);
     		}
@@ -95,8 +103,8 @@ public class FrontServlet extends HttpServlet {
             throws SQLException, ServletException, IOException {
         String login = request.getParameter("login");
         Client existingClient = clientDAO.getClient(login);
+        request.setAttribute("client", existingClient);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/AjoutClient.jsp");
-        request.setAttribute("Client", existingClient);
         dispatcher.forward(request, response);
  
     }
@@ -109,17 +117,15 @@ public class FrontServlet extends HttpServlet {
         String login = request.getParameter("login");
         String job_title = request.getParameter("job_title");
  
-        Client newClient = new Client(nom,prenom,login,job_title,password);
+        Client newClient = new Client(nom,prenom,job_title,login,password);
         clientDAO.insertClient(newClient);
-        List<Client> listClient = clientDAO.listAllClients();
-        request.setAttribute("listClient", listClient);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Listings.jsp");
-        dispatcher.forward(request, response);
+        
+        response.sendRedirect("clients/list");
         
     }
  
     private void updateClient(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws SQLException, IOException, ServletException {
         String login = request.getParameter("login");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
@@ -128,7 +134,7 @@ public class FrontServlet extends HttpServlet {
  
         Client client = new Client(nom, prenom, login,job_title,password);
         clientDAO.updateClient(client);
-        response.sendRedirect("list");
+        getServletContext().getRequestDispatcher("/WEB-INF/Listings.jsp").forward(request, response);
     }
  
     private void deleteClient(HttpServletRequest request, HttpServletResponse response)
@@ -137,7 +143,7 @@ public class FrontServlet extends HttpServlet {
  
         Client client = new Client();
         clientDAO.deleteClient(client);
-        response.sendRedirect("list");
+        response.sendRedirect("/list");
  
     }
     

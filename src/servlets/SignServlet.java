@@ -14,7 +14,7 @@ import dao.AdminDAO;
 /**
  * Servlet implementation class SignServlet
  */
-@WebServlet(urlPatterns= {"/login","/logout"})
+@WebServlet("/logout")
 public class SignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,38 +31,12 @@ public class SignServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String requestedUrl = request.getServletPath();
-
-		if (requestedUrl.equals("/login"))
-		{
-			getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request,response);
-		}
-		else
-		{
+		
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect(request.getContextPath());
-		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String username= request.getParameter("username");
-		String password = request.getParameter("password");
-		Administrateur admin = new Administrateur();
-		admin.setPassword(password);
-		admin.setPassword(password);
-		AdminDAO admindao = new AdminDAO();
-		boolean exist = admindao.connectAdmin(admin);
-		
-		if(exist) {
-			HttpSession session = request.getSession();
-			session.setAttribute("admin", admin);
-			getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp");
-		}
-	}
+	
 
 }
